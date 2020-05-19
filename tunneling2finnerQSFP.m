@@ -103,6 +103,8 @@ v2=zeros;
  %all the quantities refered for each tunneling path  
  xp=xt(Tpaths(itp,1):Tpaths(itp,2),:);
  CBp=CBT(Tpaths(itp,1):Tpaths(itp,2),:);
+ % Calculation of the Generation and Recombination depending on the Local QSFP
+ % of the tunneling Path or the ones of the contacts.
  %QSFP=QFPT(Tpaths(itp,1):Tpaths(itp,2),:);
  QSFP=maxQSF(QFPT);
  EF=EFT(Tpaths(itp,1):Tpaths(itp,2),:);
