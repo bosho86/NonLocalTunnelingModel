@@ -35,9 +35,8 @@ QFPT=(finner(M3(:,2*sl),bins))';%
 phi_b=max(CBT);%TOB
 index_b=find(CBT==phi_b);
 index_bTOB= find(CBT<phi_b);
-A=index_bTOB(1:index_b-1,1);%primera mitad de la banda de conduccion
-B=index_bTOB(index_b:end,1);%2da mitad de la banda de conduccion
-%padding
+A=index_bTOB(1:index_b-1,1);% first half of the conduction band
+B=index_bTOB(index_b:end,1);% second half of the conduction band
 
 [mb, nb]=size(B);%
 [ma, na]=size(A);%
@@ -72,8 +71,8 @@ figure(33)
  ylabel('CB (eV)')
 
 
-% %%% parameters
- hbar=1.054571800*1e-34; %Js o kg*m^2*s^-1;
+% Physical parameters
+ hbar=1.054571800*1e-34; %Js o kg*m^2*s^-1
  kev=1.6021766208*1e-19; %(kgm^2)/s^2
  me=9.10938356*1e-31; %Kg
  mt=me*0.0516;
@@ -85,8 +84,6 @@ figure(33)
  Tpaths=[iA' B(jA)];
  [mp, np]= size(Tpaths);
 % get dE for each Tpaths
-
-
 %for each tunneling path 
 dxt=zeros;
 diff1=zeros;
@@ -106,7 +103,7 @@ v2=zeros;
 
  
  for itp=1:mp
-  %all the quantities refered to the tunneling path  
+ %all the quantities refered for each tunneling path  
  xp=xt(Tpaths(itp,1):Tpaths(itp,2),:);
  CBp=CBT(Tpaths(itp,1):Tpaths(itp,2),:);
  %QSFP=QFPT(Tpaths(itp,1):Tpaths(itp,2),:);
@@ -131,6 +128,7 @@ v2=zeros;
        gamma1=[gamma1 gamma];
    gamma2(mp)=gamma;   
   argc2=EF(1,:);
+  
   if argc2>0
        theta_c2=1;
   else
@@ -150,7 +148,7 @@ v2=zeros;
  v1(1,:)=(epsilon-CBp(end))*(abs(-EF(end)))*theta_c1;
  v2(1,:)=(epsilon-CBp(1))*(abs(EF(1)))*theta_c2;
  gamma3=[gamma3 gamma];
- 
+ %calculation the generation and recombination Rate
  G=+real((Acc*T)*(1/(q*kb))*v1*v2*gamma*(+(1+log((QSFP(end,:)-epsilon)/(kb*T)))));
  R=real((Acc*T)*(1/(q*kb))*v1*v2*gamma*(-(1+log((QSFP(1,1)-epsilon)/(kb*T)))));
  %find dx for the end of the tunneling path
@@ -167,7 +165,6 @@ v2=zeros;
  end
  
 dE=1;%0.008
-%no se como  
 %dE(itp)=CBp(1,:)-CBp(end,:);
 I=-q*sum(Gp.*dxp); % the current density
 I_cuts=I.*((4.6/kk).*1e-12); % divide by one micrometer
@@ -190,16 +187,6 @@ M=zeros;
 I_final=[I_final; I_x]
 end
 
-save('perro1bins.mat','I_final')
-% my_tunneling=transfers1(:,2)+I_final;
-% 
-% figure (66)
-% hold on
-% plot(transfers1(:,1),my_tunneling)
-% plot(transfers1(:,1),transfers1(:,4))
-% plot(transfers1(:,1),transfers1(:,2))
-% hold off
-%I_final=[I_final I_x]
-%my_tunneling=x+I_tcadnone;
- 
+save('result.mat','I_final')
+
  
