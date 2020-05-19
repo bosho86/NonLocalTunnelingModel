@@ -21,14 +21,11 @@ kk=9;
 %%%%%
 Icuts=[];
 for sl=1:1*kk%%%%%%%%%%%%%%%%%%
-% CBT=M1(:,2*sl);
-% EFT=M2(:,2*sl)*1e2;%V/m
-% QFPT=M3(:,2*sl);%
-% xt=M1(:,1).*1e-6;
+% by calling finner, I get extra discretizaton
 CBT=(finner(M1(:,2*sl),bins))';
- EFT=((finner(M2(:,2*sl),bins)).*1e2)';%V/m
+EFT=((finner(M2(:,2*sl),bins)).*1e2)';%V/m
 QFPT=(finner(M3(:,2*sl),bins))';%
- xt=((finner(M2(:,1),bins)).*1e-6)';
+xt=((finner(M2(:,1),bins)).*1e-6)';
     
 
 
